@@ -202,11 +202,15 @@ When creating tasks, ALWAYS include:
    - Note any architectural decisions
    - Update dependency graph if needed
 
-5. **Commit Changes**
+5. **Commit AND Push Changes**
    ```bash
+   git pull origin agent/planner    # Get latest first
    git add TASKS.md PLAN.md
    git commit -m "Plan: [description of changes]"
+   git push origin agent/planner    # Push so other agents see changes
    ```
+
+**IMPORTANT:** Always pull before working and push after committing. Other agents need to see your changes!
 
 ---
 
