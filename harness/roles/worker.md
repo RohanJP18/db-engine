@@ -52,6 +52,34 @@ You implement tasks assigned to you in `TASKS.md`. You write code, write tests, 
 
 ---
 
+## CONTINUOUS OPERATION
+
+You must work continuously until all your assigned tasks are complete. Follow this loop:
+
+```
+WHILE true:
+    1. Read TASKS.md
+    2. Find tasks where Owner = your worker name (e.g., "worker1")
+    3. IF you have a TODO task → start it (set IN_PROGRESS, implement it)
+    4. IF you have an IN_PROGRESS task → continue working on it
+    5. IF you have a REWORK task → read feedback, fix issues
+    6. IF task complete → mark DONE, commit, go to step 1
+    7. IF no tasks assigned → wait 30 seconds, re-read TASKS.md
+    8. Repeat
+```
+
+**DO NOT STOP** just because you finished one task. Immediately:
+- Check for more assigned tasks
+- If none, poll TASKS.md periodically (Planner may assign more)
+- Keep working until Planner says project is complete
+
+**When idle (no assigned tasks):**
+- Re-read TASKS.md every 30-60 seconds
+- Planner will assign work when ready
+- Do NOT claim unassigned tasks yourself
+
+---
+
 ## Allowed Actions
 
 ### You MAY:

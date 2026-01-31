@@ -130,14 +130,14 @@ db-engine/
 
 ### Milestone 1: Foundation
 **Goal:** Project compiles, basic infrastructure in place
-- [x] Project skeleton (DB-001) - TODO
-- [ ] Lexer (DB-002)
-- [ ] Storage engine basics (DB-005)
+- [ ] Project skeleton (DB-001) - Assigned to worker1, pending verification
+- [ ] Lexer (DB-002) - Assigned to worker1, blocked by DB-001
+- [ ] Storage engine basics (DB-005) - Assigned to worker2, blocked by DB-001
 
 ### Milestone 2: Parsing Complete
 **Goal:** Can parse all supported SQL statements
-- [ ] Parser: CREATE TABLE, INSERT (DB-003)
-- [ ] Parser: SELECT, WHERE, LIMIT, COUNT (DB-004)
+- [ ] Parser: CREATE TABLE, INSERT (DB-003) - Assigned to worker1
+- [ ] Parser: SELECT, WHERE, LIMIT, COUNT (DB-004) - Assigned to worker1
 
 ### Milestone 3: Query Pipeline
 **Goal:** Full query execution works end-to-end
@@ -235,3 +235,40 @@ DB-001 (Skeleton)
 - Planner updates this document as architecture evolves
 - Workers reference this for context but don't modify
 - Judge verifies implementation matches documented architecture
+
+---
+
+## Current Status (Updated by Planner)
+
+**Date:** 2026-01-30
+**Iteration:** 1 (Initial)
+
+### Task Assignments
+| Task | Owner | Status | Notes |
+|------|-------|--------|-------|
+| DB-001 | worker1 | TODO | Verify skeleton, mark DONE |
+| DB-002 | worker1 | TODO | Blocked by DB-001 |
+| DB-003 | worker1 | TODO | Blocked by DB-002 |
+| DB-004 | worker1 | TODO | Blocked by DB-003 |
+| DB-005 | worker2 | TODO | Blocked by DB-001 |
+| DB-006 | unassigned | TODO | Blocked by DB-004, DB-005 (merge point) |
+
+### Parallel Execution Strategy
+Once DB-001 is verified complete:
+- **worker1**: Parser track (DB-002 → DB-003 → DB-004)
+- **worker2**: Storage track (DB-005)
+
+These tracks merge at DB-006 (Binder) which depends on both the parser (DB-004) and storage (DB-005).
+
+### Merge Point Strategy
+DB-006 (Binder) will be assigned when both DB-004 and DB-005 are DONE.
+Likely assignee: worker2 (will finish storage track earlier and be available).
+
+### Blockers
+None currently identified.
+
+### Note for Workers
+Workers must merge from `agent/planner` branch to see updated task assignments:
+```bash
+git merge agent/planner --no-edit
+```
