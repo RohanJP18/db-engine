@@ -130,9 +130,9 @@ db-engine/
 
 ### Milestone 1: Foundation
 **Goal:** Project compiles, basic infrastructure in place
-- [x] Project skeleton (DB-001) - TODO
-- [ ] Lexer (DB-002)
-- [ ] Storage engine basics (DB-005)
+- [ ] Project skeleton (DB-001) - Assigned to worker1, pending verification
+- [ ] Lexer (DB-002) - Assigned to worker1, blocked by DB-001
+- [ ] Storage engine basics (DB-005) - Assigned to worker2, blocked by DB-001
 
 ### Milestone 2: Parsing Complete
 **Goal:** Can parse all supported SQL statements
@@ -235,3 +235,27 @@ DB-001 (Skeleton)
 - Planner updates this document as architecture evolves
 - Workers reference this for context but don't modify
 - Judge verifies implementation matches documented architecture
+
+---
+
+## Current Status (Updated by Planner)
+
+**Date:** 2026-01-30
+**Iteration:** 1 (Initial)
+
+### Task Assignments
+| Task | Owner | Status | Notes |
+|------|-------|--------|-------|
+| DB-001 | worker1 | TODO | Verify skeleton, mark DONE |
+| DB-002 | worker1 | TODO | Blocked by DB-001 |
+| DB-005 | worker2 | TODO | Blocked by DB-001 |
+
+### Parallel Execution Strategy
+Once DB-001 is verified complete:
+- **worker1**: Parser track (DB-002 → DB-003 → DB-004)
+- **worker2**: Storage track (DB-005)
+
+These tracks merge at DB-006 (Binder) which depends on both the parser (DB-004) and storage (DB-005).
+
+### Blockers
+None currently identified.

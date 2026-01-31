@@ -26,9 +26,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/`, `tests/`, `docs/`, `Makefile`, `README.md`
 - **Acceptance Criteria:** `make build` succeeds (even if just compiles empty main)
 - **Dependencies:** None
-- **Owner:** unassigned
+- **Owner:** worker1
 - **Status:** TODO
-- **Notes:** First task - sets up structure for all subsequent work
+- **Notes:** Initial scaffolding already exists from project setup. Worker1 should verify `make build` succeeds and mark DONE if so.
 
 ---
 
@@ -37,9 +37,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/lexer.c`, `src/lexer.h`, `src/token.h`, `tests/test_lexer.c`
 - **Acceptance Criteria:** `make test` passes lexer tests; tokenizes sample SQL correctly
 - **Dependencies:** [DB-001]
-- **Owner:** unassigned
+- **Owner:** worker1
 - **Status:** TODO
-- **Notes:** Foundation for parser
+- **Notes:** Foundation for parser. Start after DB-001 is DONE.
 
 ---
 
@@ -70,9 +70,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/storage.c`, `src/storage.h`, `src/table.h`, `tests/test_storage.c`
 - **Acceptance Criteria:** `make test` passes storage tests; can create table, insert, scan
 - **Dependencies:** [DB-001]
-- **Owner:** unassigned
+- **Owner:** worker2
 - **Status:** TODO
-- **Notes:** Can be worked in parallel with parser tasks
+- **Notes:** Can be worked in parallel with parser tasks. Start after DB-001 is DONE.
 
 ---
 
