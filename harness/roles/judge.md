@@ -138,10 +138,18 @@ git checkout agent/judge
 
 ## Evaluation Workflow
 
-### Step 1: Merge Worker Branches
+### Step 1: Pull Latest and Merge Worker Branches
 
 ```bash
 git checkout agent/judge
+git pull origin agent/judge           # Get your latest
+git pull origin agent/worker1         # Get worker1's commits
+git pull origin agent/worker2         # Get worker2's commits (if applicable)
+git pull origin agent/planner         # Get latest task definitions
+```
+
+Then merge worker branches:
+```bash
 git merge agent/worker1 --no-ff -m "Merge worker1 for evaluation"
 git merge agent/worker2 --no-ff -m "Merge worker2 for evaluation"  # if applicable
 ```
@@ -251,13 +259,28 @@ Create: `harness/logs/iter_<timestamp>/verdict.md`
 ./harness/scripts/snapshot.sh
 ```
 
-### Step 7: Notify Human
+### Step 7: Commit and Push All Changes
+
+```bash
+git add TASKS.md harness/logs/
+git commit -m "Judge: Evaluation complete - [PASS/FAIL summary]"
+git push origin agent/judge
+```
+
+**IMPORTANT:** Always push after evaluation so:
+- Workers see REWORK feedback
+- Planner sees updated task statuses
+- Human can merge to main if all passed
+
+### Step 8: Notify Human
 
 If **ALL PASS**:
 - "Ready for merge. Run: `git checkout main && git merge agent/judge`"
 
 If **ANY FAIL**:
 - "Rework required. See verdict for details."
+- Workers will pull your changes to see REWORK feedback
+- Continue monitoring for re-submissions
 
 ---
 

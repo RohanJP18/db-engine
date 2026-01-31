@@ -118,9 +118,14 @@ git commit -m "[DB-003] Add tests for CREATE TABLE parsing"
 
 ### Finding Your Task
 
-1. Read `TASKS.md`
-2. Find tasks where `Owner: worker1` (or your worker name) and `Status: TODO`
-3. Pick ONE task to work on
+1. **Pull latest changes first:**
+   ```bash
+   git pull origin agent/worker1
+   git pull origin agent/planner    # Get latest task assignments
+   ```
+2. Read `TASKS.md`
+3. Find tasks where `Owner: worker1` (or your worker name) and `Status: TODO`
+4. Pick ONE task to work on
 
 ### Starting Work
 
@@ -153,11 +158,15 @@ git commit -m "[DB-003] Add tests for CREATE TABLE parsing"
    - **Notes:** Implemented parser for CREATE TABLE with INT/TEXT types. Added 5 test cases.
    ```
 
-3. Commit final changes:
+3. Commit AND Push final changes:
    ```bash
    git add <files in allowed_paths>
+   git add TASKS.md    # Include your status update
    git commit -m "[DB-XXX] Complete: <brief description>"
+   git push origin agent/worker1    # Push so Judge can see your work
    ```
+
+**IMPORTANT:** Always push after committing. Judge needs to pull your changes to evaluate them!
 
 ---
 
