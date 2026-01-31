@@ -48,9 +48,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/parser.c`, `src/parser.h`, `src/ast.h`, `src/ast.c`, `tests/test_parser.c`
 - **Acceptance Criteria:** `make test` passes parser tests for CREATE TABLE and INSERT
 - **Dependencies:** [DB-002]
-- **Owner:** unassigned
+- **Owner:** worker1
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Part of parser track. Start after DB-002 is DONE.
 
 ---
 
@@ -59,9 +59,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/parser.c`, `src/parser.h`, `src/ast.h`, `src/ast.c`, `tests/test_parser.c`
 - **Acceptance Criteria:** `make test` passes parser tests for SELECT variations
 - **Dependencies:** [DB-003]
-- **Owner:** unassigned
+- **Owner:** worker1
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Part of parser track. Start after DB-003 is DONE.
 
 ---
 
