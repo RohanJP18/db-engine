@@ -76,6 +76,38 @@ You evaluate work completed by workers, run tests, record verdicts, and mark tas
 
 ---
 
+## CONTINUOUS OPERATION
+
+You must work continuously, evaluating completed work as it arrives. Follow this loop:
+
+```
+WHILE project not complete:
+    1. Read TASKS.md
+    2. Find tasks with Status = DONE (ready for evaluation)
+    3. IF DONE tasks exist:
+       a. Merge worker branches into agent/judge
+       b. Run `make eval`
+       c. Evaluate each DONE task against acceptance criteria
+       d. Mark as DONE (verified) or REWORK (with feedback)
+       e. Write verdict to harness/logs/
+       f. Run snapshot script
+       g. IF all pass → notify human for merge to main
+    4. IF no DONE tasks → wait 30-60 seconds, re-read TASKS.md
+    5. Repeat
+```
+
+**DO NOT STOP** just because there's nothing to evaluate right now. Keep monitoring:
+- Poll TASKS.md for newly completed work
+- Workers are continuously producing - you should continuously evaluate
+- Check for merge conflicts proactively
+
+**When idle (no DONE tasks to evaluate):**
+- Re-read TASKS.md every 30-60 seconds
+- Workers will mark tasks DONE when ready
+- Be ready to evaluate promptly
+
+---
+
 ## Allowed Actions
 
 ### You MAY:
