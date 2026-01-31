@@ -141,20 +141,20 @@ db-engine/
 
 ### Milestone 3: Query Pipeline
 **Goal:** Full query execution works end-to-end
-- [ ] Type checker/binder (DB-006)
-- [ ] Query planner (DB-007)
-- [ ] Executor (DB-008)
+- [ ] Type checker/binder (DB-006) - Assigned to worker2
+- [ ] Query planner (DB-007) - Assigned to worker2
+- [ ] Executor (DB-008) - Assigned to worker1
 
 ### Milestone 4: User Interface
 **Goal:** Usable CLI with persistence
-- [ ] REPL interface (DB-009)
-- [ ] EXPLAIN command (DB-010)
-- [ ] Persistence (DB-011)
+- [ ] REPL interface (DB-009) - Assigned to worker1
+- [ ] EXPLAIN command (DB-010) - Assigned to worker2
+- [ ] Persistence (DB-011) - Assigned to worker2
 
 ### Milestone 5: Testing & Docs
 **Goal:** Production-ready with documentation
-- [ ] Golden query tests (DB-012)
-- [ ] Documentation (DB-013)
+- [ ] Golden query tests (DB-012) - Assigned to worker1
+- [ ] Documentation (DB-013) - Assigned to worker2
 
 ---
 
@@ -241,34 +241,53 @@ DB-001 (Skeleton)
 ## Current Status (Updated by Planner)
 
 **Date:** 2026-01-30
-**Iteration:** 1 (Initial)
+**Iteration:** 2 (All tasks assigned)
 
-### Task Assignments
-| Task | Owner | Status | Notes |
-|------|-------|--------|-------|
-| DB-001 | worker1 | TODO | Verify skeleton, mark DONE |
-| DB-002 | worker1 | TODO | Blocked by DB-001 |
-| DB-003 | worker1 | TODO | Blocked by DB-002 |
-| DB-004 | worker1 | TODO | Blocked by DB-003 |
-| DB-005 | worker2 | TODO | Blocked by DB-001 |
-| DB-006 | unassigned | TODO | Blocked by DB-004, DB-005 (merge point) |
+### Complete Task Assignments
+| Task | Owner | Status | Dependencies | Notes |
+|------|-------|--------|--------------|-------|
+| DB-001 | worker1 | TODO | None | Verify skeleton, mark DONE |
+| DB-002 | worker1 | TODO | DB-001 | Lexer |
+| DB-003 | worker1 | TODO | DB-002 | Parser DDL/DML |
+| DB-004 | worker1 | TODO | DB-003 | Parser SELECT |
+| DB-005 | worker2 | TODO | DB-001 | Storage engine |
+| DB-006 | worker2 | TODO | DB-004, DB-005 | Binder (merge point) |
+| DB-007 | worker2 | TODO | DB-006 | Query planner |
+| DB-008 | worker1 | TODO | DB-007 | Executor |
+| DB-009 | worker1 | TODO | DB-008, DB-010 | REPL interface |
+| DB-010 | worker2 | TODO | DB-007 | EXPLAIN command |
+| DB-011 | worker2 | TODO | DB-005, DB-009 | Persistence |
+| DB-012 | worker1 | TODO | DB-009 | Golden tests |
+| DB-013 | worker2 | TODO | DB-011 | Documentation |
 
-### Parallel Execution Strategy
-Once DB-001 is verified complete:
-- **worker1**: Parser track (DB-002 → DB-003 → DB-004)
-- **worker2**: Storage track (DB-005)
+### Execution Flow
 
-These tracks merge at DB-006 (Binder) which depends on both the parser (DB-004) and storage (DB-005).
+```
+Phase 1 (Parallel):
+  worker1: DB-001 → DB-002 → DB-003 → DB-004
+  worker2: (wait) → DB-005
 
-### Merge Point Strategy
-DB-006 (Binder) will be assigned when both DB-004 and DB-005 are DONE.
-Likely assignee: worker2 (will finish storage track earlier and be available).
+Phase 2 (Merge + Sequential):
+  worker2: DB-006 → DB-007
+
+Phase 3 (Parallel):
+  worker1: DB-008
+  worker2: DB-010
+
+Phase 4 (Integration):
+  worker1: DB-009 → DB-012
+  worker2: DB-011 → DB-013
+```
+
+### Workload Balance
+- **worker1**: 7 tasks (DB-001, 002, 003, 004, 008, 009, 012)
+- **worker2**: 6 tasks (DB-005, 006, 007, 010, 011, 013)
 
 ### Blockers
 None currently identified.
 
 ### Note for Workers
-Workers must merge from `agent/planner` branch to see updated task assignments:
+Workers must merge from `agent/planner` to see task assignments:
 ```bash
-git merge agent/planner --no-edit
+git pull origin agent/planner
 ```

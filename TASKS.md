@@ -81,9 +81,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/binder.c`, `src/binder.h`, `tests/test_binder.c`
 - **Acceptance Criteria:** `make test` passes binder tests; rejects type mismatches
 - **Dependencies:** [DB-004, DB-005]
-- **Owner:** unassigned
+- **Owner:** worker2
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Merge point for parser and storage tracks. Wait for both DB-004 and DB-005 DONE.
 
 ---
 
@@ -92,9 +92,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/planner.c`, `src/planner.h`, `src/plan.h`, `tests/test_planner.c`
 - **Acceptance Criteria:** `make test` passes planner tests; generates valid plans for SELECT queries
 - **Dependencies:** [DB-006]
-- **Owner:** unassigned
+- **Owner:** worker2
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Continues worker2's track after binder. Start after DB-006 is DONE.
 
 ---
 
@@ -103,31 +103,31 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/executor.c`, `src/executor.h`, `tests/test_executor.c`
 - **Acceptance Criteria:** `make test` passes executor tests; full query pipeline works
 - **Dependencies:** [DB-007]
-- **Owner:** unassigned
+- **Owner:** worker1
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Worker1 takes over after parser track. Start after DB-007 is DONE.
 
 ---
 
 ### [DB-009] REPL Interface
-- **Description:** Implement CLI REPL: `./db repl --path <data_dir>`. Read SQL, execute, print results. Handle errors gracefully.
+- **Description:** Implement CLI REPL: `./db repl --path <data_dir>`. Read SQL, execute, print results. Handle errors gracefully. Integrate EXPLAIN command support.
 - **Allowed Paths:** `src/main.c`, `src/repl.c`, `src/repl.h`
-- **Acceptance Criteria:** `./db repl --path /tmp/test` starts, accepts SQL, returns results
-- **Dependencies:** [DB-008]
-- **Owner:** unassigned
+- **Acceptance Criteria:** `./db repl --path /tmp/test` starts, accepts SQL, returns results; EXPLAIN works
+- **Dependencies:** [DB-008, DB-010]
+- **Owner:** worker1
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Integrates all query pipeline components. Start after DB-008 and DB-010 are DONE.
 
 ---
 
 ### [DB-010] EXPLAIN Command
 - **Description:** Implement EXPLAIN that prints the physical plan tree for a query without executing it.
-- **Allowed Paths:** `src/explain.c`, `src/explain.h`, `src/repl.c`, `tests/test_explain.c`
+- **Allowed Paths:** `src/explain.c`, `src/explain.h`, `tests/test_explain.c`
 - **Acceptance Criteria:** `EXPLAIN SELECT ...` prints readable plan tree
 - **Dependencies:** [DB-007]
-- **Owner:** unassigned
+- **Owner:** worker2
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Can run in parallel with DB-008. Start after DB-007 is DONE.
 
 ---
 
@@ -136,9 +136,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `src/persist.c`, `src/persist.h`, `tests/test_persist.c`
 - **Acceptance Criteria:** Persistence test passes: insert → exit → restart → query returns data
 - **Dependencies:** [DB-005, DB-009]
-- **Owner:** unassigned
+- **Owner:** worker2
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Requires storage engine (DB-005) and REPL (DB-009) to be complete first.
 
 ---
 
@@ -146,10 +146,10 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Description:** Create golden test suite: SQL scripts with expected output. Tests cover CREATE, INSERT, SELECT, WHERE, LIMIT, COUNT.
 - **Allowed Paths:** `tests/golden/`, `tests/run_golden.sh`
 - **Acceptance Criteria:** `make test` runs golden tests; all pass with exact output match
-- **Dependencies:** [DB-008]
-- **Owner:** unassigned
+- **Dependencies:** [DB-009]
+- **Owner:** worker1
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Needs working REPL to run SQL scripts. Start after DB-009 is DONE.
 
 ---
 
@@ -158,9 +158,9 @@ This file tracks all tasks for the DB engine project. Only the Planner may creat
 - **Allowed Paths:** `docs/SQL.md`, `docs/ARCHITECTURE.md`, `docs/PERSISTENCE.md`
 - **Acceptance Criteria:** All three docs exist and accurately describe implementation
 - **Dependencies:** [DB-011]
-- **Owner:** unassigned
+- **Owner:** worker2
 - **Status:** TODO
-- **Notes:** —
+- **Notes:** Final task. Documents the completed implementation.
 
 ---
 
