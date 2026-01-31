@@ -39,3 +39,11 @@
 
 # debug information files
 *.dwo
+
+# Build output directories
+bin/
+build/
+
+# Harness temporary files
+harness/eval_output.txt
+harness/verdict.md

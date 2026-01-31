@@ -1,0 +1,175 @@
+# TASKS.md - Task Queue
+
+This file tracks all tasks for the DB engine project. Only the Planner may create/modify tasks. Workers claim and implement. Judge evaluates and marks DONE/REWORK.
+
+---
+
+## Task Format
+
+```markdown
+### [ID] Title
+- **Description:** What needs to be done
+- **Allowed Paths:** `path/to/files`, `another/path/`
+- **Acceptance Criteria:** Deterministic check that proves completion
+- **Dependencies:** [ID1, ID2] or "None"
+- **Owner:** worker1 | worker2 | unassigned
+- **Status:** TODO | IN_PROGRESS | BLOCKED | DONE | REWORK
+- **Notes:** Additional context, rework feedback
+```
+
+---
+
+## Active Tasks
+
+### [DB-001] Project Skeleton Setup
+- **Description:** Create initial project structure with src/, tests/, docs/ directories. Add Makefile with build/test/eval targets. Create placeholder main.c.
+- **Allowed Paths:** `src/`, `tests/`, `docs/`, `Makefile`, `README.md`
+- **Acceptance Criteria:** `make build` succeeds (even if just compiles empty main)
+- **Dependencies:** None
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** First task - sets up structure for all subsequent work
+
+---
+
+### [DB-002] SQL Lexer/Tokenizer
+- **Description:** Implement lexer that tokenizes SQL input into tokens (keywords, identifiers, literals, operators). Support: CREATE, TABLE, INSERT, SELECT, WHERE, LIMIT, COUNT, INT, TEXT, PRIMARY, KEY, and standard punctuation.
+- **Allowed Paths:** `src/lexer.c`, `src/lexer.h`, `src/token.h`, `tests/test_lexer.c`
+- **Acceptance Criteria:** `make test` passes lexer tests; tokenizes sample SQL correctly
+- **Dependencies:** [DB-001]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** Foundation for parser
+
+---
+
+### [DB-003] SQL Parser (CREATE TABLE, INSERT)
+- **Description:** Implement parser for CREATE TABLE and INSERT statements. Build AST nodes. Support: column definitions with types (INT, TEXT), PRIMARY KEY constraint.
+- **Allowed Paths:** `src/parser.c`, `src/parser.h`, `src/ast.h`, `src/ast.c`, `tests/test_parser.c`
+- **Acceptance Criteria:** `make test` passes parser tests for CREATE TABLE and INSERT
+- **Dependencies:** [DB-002]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-004] SQL Parser (SELECT, WHERE, LIMIT, COUNT)
+- **Description:** Extend parser for SELECT statements with WHERE clauses (= operator), LIMIT, and COUNT(*). Build corresponding AST nodes.
+- **Allowed Paths:** `src/parser.c`, `src/parser.h`, `src/ast.h`, `src/ast.c`, `tests/test_parser.c`
+- **Acceptance Criteria:** `make test` passes parser tests for SELECT variations
+- **Dependencies:** [DB-003]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-005] In-Memory Storage Engine
+- **Description:** Implement in-memory table storage. Support: create table, insert row, scan all rows. Store schema (column names, types) and row data.
+- **Allowed Paths:** `src/storage.c`, `src/storage.h`, `src/table.h`, `tests/test_storage.c`
+- **Acceptance Criteria:** `make test` passes storage tests; can create table, insert, scan
+- **Dependencies:** [DB-001]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** Can be worked in parallel with parser tasks
+
+---
+
+### [DB-006] Type Checker / Binder
+- **Description:** Implement semantic analysis: resolve table/column references, type-check expressions, validate PRIMARY KEY constraints.
+- **Allowed Paths:** `src/binder.c`, `src/binder.h`, `tests/test_binder.c`
+- **Acceptance Criteria:** `make test` passes binder tests; rejects type mismatches
+- **Dependencies:** [DB-004, DB-005]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-007] Query Planner
+- **Description:** Implement rule-based query planner. Convert bound AST to physical plan. Operators: TableScan, Filter, Project, Limit, Count.
+- **Allowed Paths:** `src/planner.c`, `src/planner.h`, `src/plan.h`, `tests/test_planner.c`
+- **Acceptance Criteria:** `make test` passes planner tests; generates valid plans for SELECT queries
+- **Dependencies:** [DB-006]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-008] Query Executor
+- **Description:** Implement executor that runs physical plans. Execute TableScan, Filter, Project, Limit, Count operators. Return result rows.
+- **Allowed Paths:** `src/executor.c`, `src/executor.h`, `tests/test_executor.c`
+- **Acceptance Criteria:** `make test` passes executor tests; full query pipeline works
+- **Dependencies:** [DB-007]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-009] REPL Interface
+- **Description:** Implement CLI REPL: `./db repl --path <data_dir>`. Read SQL, execute, print results. Handle errors gracefully.
+- **Allowed Paths:** `src/main.c`, `src/repl.c`, `src/repl.h`
+- **Acceptance Criteria:** `./db repl --path /tmp/test` starts, accepts SQL, returns results
+- **Dependencies:** [DB-008]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-010] EXPLAIN Command
+- **Description:** Implement EXPLAIN that prints the physical plan tree for a query without executing it.
+- **Allowed Paths:** `src/explain.c`, `src/explain.h`, `src/repl.c`, `tests/test_explain.c`
+- **Acceptance Criteria:** `EXPLAIN SELECT ...` prints readable plan tree
+- **Dependencies:** [DB-007]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-011] Persistence (Snapshot)
+- **Description:** Implement persistence via snapshots. On clean exit (or explicit command), dump all tables to disk. On startup, reload from snapshot.
+- **Allowed Paths:** `src/persist.c`, `src/persist.h`, `tests/test_persist.c`
+- **Acceptance Criteria:** Persistence test passes: insert → exit → restart → query returns data
+- **Dependencies:** [DB-005, DB-009]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-012] Golden Query Tests
+- **Description:** Create golden test suite: SQL scripts with expected output. Tests cover CREATE, INSERT, SELECT, WHERE, LIMIT, COUNT.
+- **Allowed Paths:** `tests/golden/`, `tests/run_golden.sh`
+- **Acceptance Criteria:** `make test` runs golden tests; all pass with exact output match
+- **Dependencies:** [DB-008]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+### [DB-013] Documentation
+- **Description:** Write required documentation: SQL.md (syntax), ARCHITECTURE.md (modules), PERSISTENCE.md (format).
+- **Allowed Paths:** `docs/SQL.md`, `docs/ARCHITECTURE.md`, `docs/PERSISTENCE.md`
+- **Acceptance Criteria:** All three docs exist and accurately describe implementation
+- **Dependencies:** [DB-011]
+- **Owner:** unassigned
+- **Status:** TODO
+- **Notes:** —
+
+---
+
+## Completed Tasks
+
+(None yet)
+
+---
+
+## Rework Queue
+
+(None yet)

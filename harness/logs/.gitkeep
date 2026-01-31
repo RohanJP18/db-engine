@@ -1,0 +1,11 @@
+# This directory stores iteration snapshots
+# Created by harness/scripts/snapshot.sh
+#
+# Structure:
+# harness/logs/
+#   iter_20240115_143000/
+#     TASKS.md
+#     PLAN.md
+#     verdict.md
+#     commits.txt
+#     summary.txt
